@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Iara</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+    <aside class="sidebar">
+
+        <div>
+
+            <h1>IARA</h1>
+            <h1>Intelligent Autonomous Remote Assistant</h1>
+
+        </div>
+
+    </aside>
+    <main class="chat-container">
+
+        <div class="chat-box" id="chat-box">
+
+            <div class="welcome">
+
+                <div class="aira-logo">
+                    Iara
+                </div>
+
+                <h1>
+                    Como posso ajudar?
+                </h1>
+
+                <p>
+                    Sua inteligência artificial de automação e assistência.
+                </p>
+
+            </div>
+
+        </div>
+        <div class="input-wrapper">
+
+            <div class="input-area">
+
+                <input
+                    type="text"
+                    id="mensagem"
+                    placeholder="Pergunte qualquer coisa..."
+                >
+
+                <button onclick="enviarMensagem()">
+                    Enviar
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
