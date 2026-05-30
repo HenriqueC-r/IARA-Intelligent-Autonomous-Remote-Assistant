@@ -1,41 +1,47 @@
-# IARA 🤖  
+# 🚀 IARA  
 ### Intelligent Autonomous Remote Assistant
 
-<img width="1919" height="949" alt="image" src="https://github.com/user-attachments/assets/43d46e5e-2220-4dec-87b7-329d170b29ff" />
+<img width="1919" height="949" alt="image" src="https://github.com/user-attachments/assets/273298d4-7a1e-405c-a68f-05c50fab7b58" />
 
+IARA (Intelligent Autonomous Remote Assistant) é uma assistente de inteligência artificial focada em automação, interação natural e execução de tarefas reais no computador.
 
-IARA (Intelligent Autonomous Remote Assistant) é uma assistente de inteligência artificial focada em automação e interação natural com o usuário.
+O projeto evoluiu de um simples chatbot para um **agente inteligente multimodal**, capaz de compreender linguagem natural, responder em tempo real e executar ações no sistema operacional.
 
-O objetivo do projeto é evoluir de um simples chatbot para um **agente inteligente capaz de executar tarefas no sistema operacional**, interpretar comandos e automatizar processos no computador.
+---
+
+## 🧠 O que a IARA é hoje
+
+A IARA não é mais apenas um chatbot.
+
+Ela agora funciona como um **agente inteligente interativo**, com capacidade de:
+
+- 🗣️ Conversar em tempo real por voz  
+- ⚡ Responder com baixa latência (mais rápida)  
+- 🧠 Entender melhor intenções do usuário  
+- 🤖 Executar ações como um agente no sistema  
+- 🌐 Integrar navegação e automação web  
 
 ---
 
 ## 🚀 Funcionalidades
 
 - Chat com IA utilizando modelos locais via Ollama  
-- Processamento de linguagem natural  
-- Execução de ações via comandos inteligentes  
-- Integração com navegador para automação de pesquisas  
-- Acesso a plataformas como YouTube para busca de conteúdo  
-- Base preparada para evolução como agente autônomo  
+- Interação por **voz em tempo real**  
+- Processamento avançado de linguagem natural  
+- Sistema de agentes para execução de tarefas  
+- Automação de navegador e pesquisas  
+- Acesso a plataformas como YouTube e Google  
+- Base preparada para evolução contínua como agente autônomo  
 
 ---
 
-## 🌐 Capacidades da IARA (em evolução)
+## 🌐 Capacidades atuais
 
-A IARA já é capaz de ir além de um simples chat.
-
-Com comandos naturais, ela pode:
-
-- 🌍 Abrir o navegador automaticamente  
-- 🔎 Realizar pesquisas na web e te direcionar para os resultados  
-- 📺 Acessar o YouTube e executar buscas por vídeos  
-- 🤖 Interpretar intenções simples do usuário e transformar em ações  
-
-### Exemplo:
-> "Pesquise sobre inteligência artificial"
-
-→ A IARA abre o navegador e te leva diretamente para os resultados
+- 🌍 Abrir navegadores automaticamente  
+- 🔎 Realizar pesquisas inteligentes na web  
+- 📺 Buscar e acessar vídeos no YouTube  
+- 🎤 Conversar por voz com resposta dinâmica  
+- ⚙️ Executar ações no sistema como um assistente real  
 
 ---
 
@@ -44,6 +50,7 @@ Com comandos naturais, ela pode:
 - Python 🐍  
 - Flask 🌐  
 - Ollama 🤖  
+- Speech-to-Text / Text-to-Speech 🎤  
 - HTML / CSS / JavaScript  
 - Requests  
 
@@ -51,21 +58,21 @@ Com comandos naturais, ela pode:
 
 ## ⚠️ Status do projeto
 
-🚧 **Em desenvolvimento**
+🚧 Em evolução ativa (agente em desenvolvimento)
 
-A IARA ainda não está finalizada.
+A IARA já evoluiu para um sistema mais inteligente e interativo, com suporte a voz e respostas em tempo real.
 
-Ela já consegue realizar algumas automações básicas, mas ainda está evoluindo para se tornar um agente completo capaz de interagir diretamente com o sistema operacional.
+Ainda está em fase de expansão para se tornar um **agente autônomo completo**.
 
 ---
 
-## 🔮 Próximas melhorias
+## 🔮 Próximos passos
 
+- 🧩 Sistema de agentes mais modular  
 - 🧠 Melhor compreensão de comandos complexos  
-- ⚙️ Configuração automática de tarefas no computador  
-- 🔍 Pesquisas mais inteligentes e contextuais  
-- 🤖 Expansão do sistema de automação de ações  
-- 🧩 Evolução para um agente autônomo completo  
+- 🖥️ Automação avançada do sistema operacional  
+- 🔗 Integração com serviços externos  
+- 🤖 Evolução para assistente autônomo completo  
 
 ---
 
