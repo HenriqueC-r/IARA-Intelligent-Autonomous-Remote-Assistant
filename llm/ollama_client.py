@@ -1,7 +1,8 @@
 import ollama
+import os
 
 
-SYSTEM_PROMPT = SYSTEM_PROMPT = '''
+SYSTEM_PROMPT = '''
 Você é a Iara.
 
 IARA significa:
@@ -100,7 +101,7 @@ def perguntar_ia(prompt):
 
     resposta = ollama.chat(
 
-        model='llama3',
+        model=os.environ.get('OLLAMA_MODEL', 'llama3'),
 
         messages=[
             {
@@ -111,7 +112,12 @@ def perguntar_ia(prompt):
                 'role':'user',
                 'content': prompt
             }
-        ]
+        ],
+
+        options={
+            'num_predict': int(os.environ.get('OLLAMA_NUM_PREDICT', '300')),
+            'temperature': float(os.environ.get('OLLAMA_TEMPERATURE', '0.7'))
+        }
 
     )
 

@@ -318,6 +318,31 @@ body{
     transition:.2s;
 }
 
+.input-area .voice-button{
+    width:48px;
+    height:48px;
+
+    padding:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:16px;
+
+    background:rgba(59,130,246,.14);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    font-size:20px;
+}
+
+.input-area .voice-button.listening{
+    background:#ef4444;
+
+    box-shadow:0 0 0 6px rgba(239,68,68,.16);
+}
+
 .input-area button:hover{
     transform:scale(1.03);
 }

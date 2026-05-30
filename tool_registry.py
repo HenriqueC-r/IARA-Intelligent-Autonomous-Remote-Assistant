@@ -1,16 +1,26 @@
-from tools.google import pesquisar_google
-
-from tools.youtube import pesquisar_youtube
+from tools.browser import (
+    pesquisar_google,
+    abrir_youtube,
+    abrir_site,
+    digitar,
+    pressionar_tecla
+)
 
 from tools.programs import abrir_programa
 
 
 TOOLS = {
 
-    'pesquisar_google': pesquisar_google,
+    "abrir_programa": abrir_programa,
 
-    'pesquisar_youtube': pesquisar_youtube,
+    "pesquisa_web": pesquisar_google,
 
-    'abrir_programa': abrir_programa
+    "abrir_youtube": abrir_youtube,
+
+    "abrir_site": abrir_site,
+
+    "digitar": digitar,
+
+    "pressionar_tecla": pressionar_tecla
 
 }
