@@ -1,4 +1,3 @@
-cat > README.md << 'EOF'
 # IARA 🤖
 ### Intelligent Autonomous Remote Assistant
 
@@ -132,4 +131,3 @@ Em desenvolvimento ativo. A IARA já executa automações reais, mantém histór
 ## Autor
 
 Desenvolvido por **Caio Henrique** — desenvolvedor Python brasileiro 🇧🇷
-EOF
