@@ -8,7 +8,7 @@ from flask import request, jsonify, render_template, Response
 
 from main import app
 
-from agents.planner import gerar_plano
+from agents.planner import gerar_plano, _parece_automacao
 from agents.executor import executar_plano
 from agents.executador_real import executar_acao, executar_acoes
 
@@ -18,6 +18,8 @@ from llm.ollama_client import perguntar_ia
 DEBUG_LOGS = os.environ.get('IARA_DEBUG') == '1'
 TTS_CACHE = OrderedDict()
 TTS_CACHE_MAX = int(os.environ.get('IARA_TTS_CACHE_MAX', '32'))
+
+historico_conversa = []
 
 
 def debug_print(*args):
@@ -127,36 +129,46 @@ def tts():
 @app.route('/chat', methods=['POST'])
 def chat():
 
+    global historico_conversa
+
     dados = request.get_json()
     mensagem = dados['mensagem']
 
     # ======================================
-    # GERA PLANO (AUTOMAÇÃO)
+    # SÓ ENTRA NO PLANNER SE PARECER AUTOMAÇÃO
     # ======================================
 
-    plano = gerar_plano(mensagem)
+    if _parece_automacao(mensagem):
 
-    debug_print('\n========= PLANO =========')
-    debug_print(plano)
-    debug_print('=========================\n')
+        plano = gerar_plano(mensagem)
 
-    # ======================================
-    # SE FOR AUTOMAÇÃO
-    # ======================================
+        debug_print('\n========= PLANO =========')
+        debug_print(plano)
+        debug_print('=========================\n')
 
-    if len(plano) > 0:
+        if len(plano) > 0:
 
-        resposta = executar_plano(plano)
+            resposta = executar_plano(plano)
 
-        return jsonify({
-            "resposta": resposta
-        })
+            return jsonify({
+                "resposta": resposta
+            })
 
     # ======================================
-    # CHAT NORMAL (SEM AUTOMAÇÃO)
+    # CHAT NORMAL (COM HISTÓRICO)
     # ======================================
 
-    resposta = perguntar_ia(mensagem)
+    historico_conversa.append({
+        'role': 'user',
+        'content': mensagem
+    })
+
+    resposta = perguntar_ia(historico_conversa)
+
+    historico_conversa.append({
+        'role': 'assistant',
+        'content': resposta
+    })
 
     return jsonify({
         "resposta": resposta

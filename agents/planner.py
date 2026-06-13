@@ -55,6 +55,12 @@ PALAVRAS_AUTOMACAO = (
     "reproduzir",
     "youtube",
     "spotify",
+    "coloca",
+    "colocar",
+    "musica",
+    "música",
+    "som",
+    "põe",
 )
 
 
@@ -154,6 +160,28 @@ def _extrair_busca_youtube(original, texto_normalizado):
 
 
 def _extrair_busca_spotify(original, texto_normalizado):
+
+    # ======================================
+    # COMANDO DE MÚSICA SEM SPOTIFY EXPLÍCITO
+    # ======================================
+
+    match_musica = re.search(
+        r"^(?:coloca|colocar|toca|tocar|reproduzir|põe|poe)\s+(?:uma\s+)?(?:m[uú]sica\s+)?(?:de\s+|do\s+|da\s+)?(.+)",
+        original,
+        re.IGNORECASE,
+    )
+
+    if match_musica:
+        busca = _limpar_pesquisa(match_musica.group(1))
+        busca_normalizada = _normalizar(busca)
+
+        sem_busca = {"", "musica", "música", "som", "alguma coisa", "algo"}
+
+        if busca_normalizada not in sem_busca:
+            return busca
+
+        return ""
+
     if "spotify" not in texto_normalizado:
         return None
 
@@ -210,10 +238,11 @@ def _plano_rapido(mensagem):
     plano = []
 
     busca_spotify = _extrair_busca_spotify(original, texto)
-    if busca_spotify:
+
+    if busca_spotify is not None:
         return [{
             "tool": "pesquisar_spotify",
-            "args": {"pesquisa": busca_spotify}
+            "args": {"pesquisa": busca_spotify} if busca_spotify else {}
         }]
 
     busca_youtube = _extrair_busca_youtube(original, texto)
@@ -462,59 +491,27 @@ Resposta:
 =================================================
 
 Usuário:
-abra vscode
+coloca uma música
 
 Resposta:
 [
   {{
-    "tool":"abrir_programa",
-    "args":{{
-      "programa":"vscode"
-    }}
+    "tool":"pesquisar_spotify",
+    "args":{{}}
   }}
 ]
 
 =================================================
 
 Usuário:
-abra terminal
+coloca Emicida
 
 Resposta:
 [
   {{
-    "tool":"abrir_programa",
+    "tool":"pesquisar_spotify",
     "args":{{
-      "programa":"terminal"
-    }}
-  }}
-]
-
-=================================================
-
-Usuário:
-abra o google e pesquise flask
-
-Resposta:
-[
-  {{
-    "tool":"pesquisa_web",
-    "args":{{
-      "query":"flask"
-    }}
-  }}
-]
-
-=================================================
-
-Usuário:
-pesquise inteligência artificial no youtube
-
-Resposta:
-[
-  {{
-    "tool":"abrir_youtube",
-    "args":{{
-      "pesquisa":"inteligência artificial"
+      "pesquisa":"Emicida"
     }}
   }}
 ]
@@ -551,7 +548,7 @@ Mensagem:
 {mensagem}
 """
 
-    resposta = perguntar_ia(prompt)
+    resposta = perguntar_ia([{'role': 'user', 'content': prompt}])
 
     debug_print("\n========= RESPOSTA IA =========")
     debug_print(resposta)

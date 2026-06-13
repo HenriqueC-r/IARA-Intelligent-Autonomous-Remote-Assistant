@@ -2,36 +2,37 @@ from playwright.sync_api import sync_playwright
 
 
 # ======================================
-# PLAYWRIGHT GLOBAL
+# ESTADO GLOBAL (começa tudo None)
 # ======================================
 
-playwright = sync_playwright().start()
-
-
-# ======================================
-# NAVEGADOR GLOBAL
-# ======================================
-
-browser = playwright.chromium.launch(
-
-    headless=False,
-    slow_mo=300
-
-)
-
-
-# ======================================
-# ESTADO DA AIRA
-# ======================================
+_playwright = None
+_browser = None
 
 estado = {
-
     'navegador_aberto': False,
     'pagina': None,
     'ultima_pesquisa': None,
     'ultimo_site': None
-
 }
+
+
+# ======================================
+# INICIALIZAR PLAYWRIGHT (lazy)
+# ======================================
+
+def _garantir_browser():
+    global _playwright, _browser
+
+    if _browser is not None:
+        return
+
+    _playwright = sync_playwright().start()
+    _browser = _playwright.chromium.launch(
+        headless=False,
+        slow_mo=300
+    )
+
+    print('\nPlaywright iniciado 🚀')
 
 
 # ======================================
@@ -39,31 +40,19 @@ estado = {
 # ======================================
 
 def abrir_pagina():
-
     global estado
 
-    # ======================================
-    # SE JÁ EXISTE PÁGINA
-    # ======================================
-
     if estado['pagina']:
-
         return estado['pagina']
 
+    _garantir_browser()
 
-    # ======================================
-    # CRIAR NOVA PÁGINA
-    # ======================================
-
-    pagina = browser.new_page()
-
+    pagina = _browser.new_page()
 
     estado['pagina'] = pagina
     estado['navegador_aberto'] = True
 
-
-    print('\nNavegador da AIRA iniciado 🚀')
-
+    print('\nNavegador da IARA iniciado 🚀')
 
     return pagina
 
@@ -73,7 +62,6 @@ def abrir_pagina():
 # ======================================
 
 def pegar_pagina():
-
     return estado['pagina']
 
 
@@ -82,7 +70,6 @@ def pegar_pagina():
 # ======================================
 
 def salvar_site(site):
-
     estado['ultimo_site'] = site
 
 
@@ -91,7 +78,6 @@ def salvar_site(site):
 # ======================================
 
 def salvar_pesquisa(pesquisa):
-
     estado['ultima_pesquisa'] = pesquisa
 
 
@@ -100,17 +86,20 @@ def salvar_pesquisa(pesquisa):
 # ======================================
 
 def fechar_navegador():
-
-    global estado
-
+    global estado, _browser, _playwright
 
     if estado['pagina']:
-
         estado['pagina'].close()
 
+    if _browser:
+        _browser.close()
+        _browser = None
+
+    if _playwright:
+        _playwright.stop()
+        _playwright = None
 
     estado['pagina'] = None
     estado['navegador_aberto'] = False
-
 
     print('\nNavegador fechado.')

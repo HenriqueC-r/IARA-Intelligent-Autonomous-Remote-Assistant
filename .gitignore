@@ -1,5 +1,21 @@
 __pycache__/
 *.pyc
+*.pyo
 .venv/
 venv/
 .env
+.env.*
+
+# screenshot gerada pelo screen.py
+screenshot.png
+
+# arquivos de teste e rascunhos
+teste.py
+*.txt
+
+# IDEs
+.vscode/
+.idea/
+
+# logs
+*.log

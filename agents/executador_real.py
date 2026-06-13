@@ -1,13 +1,5 @@
+from tools.tool_registry import executar_tool, TOOLS
 from tools.programs import abrir_programa, obter_site_sugerido
-
-from tools.browser import (
-    pesquisar_google,
-    abrir_youtube,
-    pesquisar_spotify,
-    abrir_site,
-    digitar,
-    pressionar_tecla
-)
 
 
 def _nome_programa(programa):
@@ -16,26 +8,23 @@ def _nome_programa(programa):
         "vscode": "VS Code",
         "spotify": "Spotify"
     }
-
     return nomes.get(programa, programa)
 
 
 def executar_acao(acao):
-
     tool = acao["tool"]
     args = acao.get("args", {})
 
     # ======================================
-    # ABRIR PROGRAMA
+    # ABRIR PROGRAMA (tratamento especial)
     # ======================================
 
     if tool == "abrir_programa":
-
         programa = args["programa"]
         abriu = abrir_programa(programa)
 
         if abriu:
-            return f"Abrindo {programa} 🚀"
+            return f"Abrindo {_nome_programa(programa)} 🚀"
 
         site = obter_site_sugerido(programa)
 
@@ -45,81 +34,33 @@ def executar_acao(acao):
         return f"Não consegui encontrar o {_nome_programa(programa)} instalado."
 
     # ======================================
-    # PESQUISA WEB
+    # TODAS AS OUTRAS TOOLS VIA REGISTRY
     # ======================================
 
-    elif tool == "pesquisa_web":
+    if tool == "pesquisa_web":
+        args["query"] = args.get("query") or args.get("texto")
 
-        query = args.get("query") or args.get("texto")
+    if tool == "pesquisar_spotify":
+        args["pesquisa"] = args.get("pesquisa") or args.get("query")
 
-        pesquisar_google(query)
+    executar_tool(tool, args)
 
-        return f'Pesquisando "{query}" 🔎'
+    MENSAGENS = {
+        "pesquisa_web":      lambda a: f'Pesquisando "{a.get("query")}" 🔎',
+        "abrir_youtube":     lambda a: f'Pesquisando "{a.get("pesquisa")}" no YouTube 📺' if a.get("pesquisa") else "YouTube aberto 🚀",
+        "pesquisar_spotify": lambda a: f'Buscando "{a.get("pesquisa")}" no Spotify 🎵' if a.get("pesquisa") else "Spotify aberto 🚀",
+        "abrir_site":        lambda a: f'Abrindo {a.get("url")} 🌐',
+        "digitar":           lambda a: f'Digitando "{a.get("texto")}" ⌨️',
+        "pressionar_tecla":  lambda a: f'Tecla "{a.get("tecla")}" pressionada ⌨️',
+    }
 
-    # ======================================
-    # YOUTUBE
-    # ======================================
+    mensagem = MENSAGENS.get(tool)
 
-    elif tool == "abrir_youtube":
+    if mensagem:
+        return mensagem(args)
 
-        pesquisa = args.get("pesquisa")
-
-        abrir_youtube(pesquisa)
-
-        if pesquisa:
-            return f'Pesquisando "{pesquisa}" no YouTube 📺'
-
-        return "YouTube aberto 🚀"
-
-    # ======================================
-    # SPOTIFY
-    # ======================================
-
-    elif tool == "pesquisar_spotify":
-
-        pesquisa = args.get("pesquisa") or args.get("query")
-
-        pesquisar_spotify(pesquisa)
-
-        if pesquisa:
-            return f'Pesquisando "{pesquisa}" no Spotify. Não consigo garantir o play automático, mas deixei a busca aberta.'
-
-        return "Spotify aberto 🚀"
-
-    # ======================================
-    # ABRIR SITE
-    # ======================================
-
-    elif tool == "abrir_site":
-
-        abrir_site(args["url"])
-        return f'Abrindo {args["url"]} 🌐'
-
-    # ======================================
-    # DIGITAR
-    # ======================================
-
-    elif tool == "digitar":
-
-        digitar(args["texto"])
-        return f'Digitando "{args["texto"]}" ⌨️'
-
-    # ======================================
-    # PRESSIONAR TECLA
-    # ======================================
-
-    elif tool == "pressionar_tecla":
-
-        pressionar_tecla(args["tecla"])
-        return f'Tecla "{args["tecla"]}" pressionada ⌨️'
-
-    return "Ação desconhecida"
+    return "Ação desconhecida."
 
 
 def executar_acoes(acoes):
-    resultados = []
-
-    for acao in acoes:
-        resultados.append(executar_acao(acao))
-
-    return resultados
+    return [executar_acao(acao) for acao in acoes]
