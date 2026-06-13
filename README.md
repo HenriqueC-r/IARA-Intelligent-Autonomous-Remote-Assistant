@@ -27,7 +27,7 @@ Diferente de um chatbot comum, a IARA age. Ela entende o que você quer e execut
 
 ## Arquitetura
 
-\`\`\`
+```
 IARA/
 ├── agents/
 │   ├── planner.py        # Converte linguagem natural em ações JSON
@@ -48,11 +48,11 @@ IARA/
 ├── routes/
 │   └── chat.py           # Rotas Flask (chat, TTS, execução)
 └── main.py
-\`\`\`
+```
 
 O fluxo de uma mensagem:
 
-\`\`\`
+```
 usuário fala/digita
       ↓
 planner detecta se é automação ou conversa
@@ -61,7 +61,7 @@ planner detecta se é automação ou conversa
 [conversa]  → Ollama responde com contexto do histórico
       ↓
 resposta em texto + áudio (TTS via OpenAI ou navegador)
-\`\`\`
+```
 
 ---
 
@@ -84,7 +84,7 @@ resposta em texto + áudio (TTS via OpenAI ou navegador)
 
 **Pré-requisitos:** Python 3.10+, [Ollama](https://ollama.com) instalado e rodando
 
-\`\`\`bash
+```bash
 # Clone o repositório
 git clone https://github.com/HenriqueC-r/IARA-Intelligent-Autonomous-Remote-Assistant.git
 cd IARA-Intelligent-Autonomous-Remote-Assistant
@@ -99,26 +99,26 @@ pip install -r requirements.txt
 
 # Instale o Playwright
 playwright install chromium
-\`\`\`
+```
 
-Configure o \`.env\` na raiz:
+Configure o `.env` na raiz:
 
-\`\`\`env
+```env
 OLLAMA_MODEL=llama3
 OLLAMA_NUM_PREDICT=300
 OLLAMA_TEMPERATURE=0.7
 
 # Opcional — TTS neural via OpenAI
 OPENAI_API_KEY=sua_chave_aqui
-\`\`\`
+```
 
 Rode:
 
-\`\`\`bash
+```bash
 python main.py
-\`\`\`
+```
 
-Acesse \`http://localhost:5000\`
+Acesse `http://localhost:5000`
 
 ---
 
@@ -130,4 +130,8 @@ Em desenvolvimento ativo. A IARA já executa automações reais, mantém histór
 
 ## Autor
 
+<<<<<<< HEAD
 Desenvolvido por **Caio Henrique** — desenvolvedor Python brasileiro 🇧🇷
+=======
+Desenvolvido por **Caio Henrique** — desenvolvedor Python brasileiro 🇧🇷
+>>>>>>> 3c6a340 (docs: README reescrito com arquitetura e instalação 2)
